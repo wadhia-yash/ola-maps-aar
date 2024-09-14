@@ -1,0 +1,42 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId = 'com.ola.maps'
+            artifactId = 'ola-aar'
+            version = '1.6.0'
+
+            // Specify the AAR file to publish
+            artifact("$buildDir/libs/OlaMapSdk-1.6.0.aar")  // Ensure the correct path to your AAR file
+
+            // Create a POM file
+            pom {
+                name = 'Ola AAR Library'
+                description = 'OLA AAR into Maven'
+                url = 'https://your.repo.url'  // Replace with your project URL
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        // Replace with your Maven repository URL (could be Nexus, Sonatype, JFrog Artifactory, etc.)
+        maven {
+            url 'https://jitpack.io'
+        }
+    }
+}
+
+task copyAar(type: Copy) {
+    from 'libs'
+    into "$buildDir/libs"
+    include '*.aar'
+}
+
+preBuild.dependsOn copyAar
