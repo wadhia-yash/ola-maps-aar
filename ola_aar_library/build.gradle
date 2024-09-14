@@ -14,7 +14,7 @@ publishing {
             pom {
                 name = 'Ola AAR Library'
                 description = 'OLA AAR into Maven'
-                url = 'https://your.repo.url'  // Replace with your project URL
+                url = 'https://github.com/wadhia-yash/ola-maps-aar.git'  // Replace with your project URL
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
