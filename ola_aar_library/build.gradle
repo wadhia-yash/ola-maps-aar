@@ -79,7 +79,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.ola.maps'
             artifactId = 'ola-maps-aar'
-            version = "1.0.0"
+            version = "1.0.1"
             pom {
                 name = 'Ola AAR Library'
                 description = 'OLA AAR into Maven'

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ola.maps</groupId> <!-- com.github.geek-atif-->
   <artifactId>ola-maps-aar</artifactId> <!-- com-atifqamar-customtoast -->
-  <version>1.0.0</version> <!-- 1.0 -->
+  <version>1.0.1</version> <!-- 1.0 -->
   <packaging>pom</packaging>
   
   <name>Ola AAR Library</name>

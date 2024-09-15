@@ -2,5 +2,5 @@ jdk:
   - openjdk17
 install:
   - FILE="-Dfile=./ola_aar_library/libs/OlaMapSdk-1.6.0.aar" #com-atifqamar-customtoast.aar 
-  - mvn install:install-file $FILE -DgroupId=com.ola.maps -DartifactId=ola-maps-aar -Dversion=1.0.0 -Dpackaging=aar -DgeneratePom=true
+  - mvn install:install-file $FILE -DgroupId=com.ola.maps -DartifactId=ola-maps-aar -Dversion=1.0.1 -Dpackaging=aar -DgeneratePom=true
                  
