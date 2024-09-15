@@ -1,42 +1,92 @@
-apply plugin: 'maven-publish'
+//1. Add below line
+//===============================
+buildscript {
+    ext.kotlin_version = '1.7.20'
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+    }
 
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.1.3'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+//===============================
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish' // 2. Add this line
+}
+
+android {
+    compileSdk 32
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 32
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            consumerProguardFiles 'consumer-rules.pro' //3. Add this line
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+// 4. Add below line
+//===============================
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)        // << --- ADD This
+    }
+}
+//===============================
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17            // << --- ADD This
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+// 5. Add below line
+//===============================
 publishing {
     publications {
-        aar(MavenPublication) {
+        maven(MavenPublication) {
             groupId = 'com.ola.maps'
-            artifactId = 'ola-aar'
-            version = '1.6.0'
-
-            // Specify the AAR file to publish
-            artifact("$buildDir/libs/OlaMapSdk-1.6.0.aar")  // Ensure the correct path to your AAR file
-
-            // Create a POM file
+            artifactId = 'ola-maps-aar'
+            version = "1.0.0"
             pom {
                 name = 'Ola AAR Library'
                 description = 'OLA AAR into Maven'
-                url = 'https://github.com/wadhia-yash/ola-maps-aar.git'  // Replace with your project URL
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
             }
         }
     }
-
     repositories {
-        // Replace with your Maven repository URL (could be Nexus, Sonatype, JFrog Artifactory, etc.)
-        maven {
-            url 'https://jitpack.io'
-        }
+        mavenLocal()
     }
 }
-
-task copyAar(type: Copy) {
-    from 'libs'
-    into "$buildDir/libs"
-    include '*.aar'
-}
-
-preBuild.dependsOn copyAar
